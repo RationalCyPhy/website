@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style C — Bold Editorial</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111;
+    --white: #f0ede8;
+    --accent: #b8ff00;
+    --text: #f0ede8;
+    --muted: #555;
+    --border: #222;
+    --grotesk: 'Space Grotesk', sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--grotesk);
+    min-height: 100vh;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: var(--grotesk);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    text-transform: uppercase;
+  }
+
+  .logo span { color: var(--accent); }
+
+  nav ul {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  nav a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  nav a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--accent) !important;
+    color: var(--bg) !important;
+    padding: 10px 20px;
+    font-weight: 700 !important;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 80px 48px 60px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .hero-tag span { color: var(--accent); }
+
+  h1 {
+    font-size: clamp(56px, 9vw, 140px);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+
+  h1 .stroke {
+    -webkit-text-stroke: 1px var(--white);
+    color: transparent;
+  }
+
+  h1 .accent { color: var(--accent); }
+
+  .hero-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 400px;
+    font-weight: 400;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 16px 40px;
+    font-family: var(--grotesk);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 16px 40px;
+    font-family: var(--grotesk);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+  }
+
+  /* Ticker */
+  .ticker {
+    background: var(--accent);
+    color: var(--bg);
+    padding: 12px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-inner {
+    display: inline-flex;
+    gap: 64px;
+    animation: scroll 20s linear infinite;
+  }
+
+  .ticker-item {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .ticker-item::after {
+    content: '◆';
+    font-size: 8px;
+  }
+
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Products */
+  .section {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 48px 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h2 {
+    font-size: clamp(32px, 5vw, 60px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  h2 span { color: var(--accent); }
+
+  .section-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .product-card {
+    padding: 48px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+
+  .product-card:last-child { border-right: none; }
+  .product-card:hover { background: var(--bg2); }
+
+  .product-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .product-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .product-name {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  .product-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+
+  .product-arrow {
+    font-size: 24px;
+    color: var(--accent);
+    display: inline-block;
+    transform: rotate(-45deg);
+  }
+
+  /* Stats band */
+  .stats-band {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat-cell {
+    padding: 40px 48px;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat-cell:last-child { border-right: none; }
+
+  .stat-num {
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-num span { color: var(--accent); }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* Funders */
+  .funders-row {
+    display: flex;
+    padding: 48px;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .funder-pill {
+    border: 1px solid var(--border);
+    padding: 16px 32px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .funder-pill:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .funder-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: auto;
+    max-width: 200px;
+    line-height: 1.5;
+  }
+
+  footer {
+    padding: 28px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .style-badge {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 8px 16px;
+    font-weight: 700;
+    z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div class="style-badge">STYLE C — BOLD EDITORIAL</div>
+
+<nav>
+  <div class="logo">Rational<span>Cyphy</span></div>
+  <ul>
+    <li><a href="#">Products</a></li>
+    <li><a href="#">Research</a></li>
+    <li><a href="#">Team</a></li>
+    <li><a class="nav-cta" href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-top">
+    <div class="hero-tag">Physical Intelligence &nbsp;/&nbsp; <span>Urbana-Champaign, IL</span></div>
+    <div class="hero-tag">Est. 2020 &nbsp;·&nbsp; <span>$5M+ Funded</span></div>
+  </div>
+  <h1>
+    <div>Rational</div>
+    <div class="stroke">Cyber</div>
+    <div class="accent">Physical</div>
+  </h1>
+  <div class="hero-bottom">
+    <p class="hero-sub">We build powerful drones, autonomy stacks, and the tools to design, verify, and reason about AI-enabled systems — with rigor.</p>
+    <div class="hero-actions">
+      <button class="btn-primary">View Products →</button>
+      <button class="btn-ghost">Research &amp; Papers</button>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">RTAEval — Safety Assurance</span>
+    <span class="ticker-item">Mapping Drone</span>
+    <span class="ticker-item">Visual Tracking & Mapping</span>
+    <span class="ticker-item">NASA Funded</span>
+    <span class="ticker-item">AFRL Funded</span>
+    <span class="ticker-item">NSF Funded</span>
+    <span class="ticker-item">$5M+ Raised</span>
+    <span class="ticker-item">Urbana-Champaign, IL</span>
+    <!-- repeat for seamless loop -->
+    <span class="ticker-item">RTAEval — Safety Assurance</span>
+    <span class="ticker-item">Mapping Drone</span>
+    <span class="ticker-item">Visual Tracking & Mapping</span>
+    <span class="ticker-item">NASA Funded</span>
+    <span class="ticker-item">AFRL Funded</span>
+    <span class="ticker-item">NSF Funded</span>
+    <span class="ticker-item">$5M+ Raised</span>
+    <span class="ticker-item">Urbana-Champaign, IL</span>
+  </div>
+</div>
+
+<div class="stats-band">
+  <div class="stat-cell">
+    <div class="stat-num">$5<span>M+</span></div>
+    <div class="stat-label">Total Funding</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">3</div>
+    <div class="stat-label">Gov't Backers</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">3</div>
+    <div class="stat-label">Core Products</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">5<span>+</span></div>
+    <div class="stat-label">Team Members</div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-header">
+    <h2>Products<span>.</span></h2>
+    <div class="section-meta">Physical intelligence<br>for the real world</div>
+  </div>
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-num"><span>01</span><div class="product-dot"></div></div>
+      <div class="product-name">RTAEval</div>
+      <p class="product-desc">Formal assurance tooling for AI-enabled autonomy. Verify safety properties of runtime assurance architectures.</p>
+      <div class="product-arrow">↗</div>
+    </div>
+    <div class="product-card">
+      <div class="product-num"><span>02</span><div class="product-dot"></div></div>
+      <div class="product-name">Mapping Drone</div>
+      <p class="product-desc">High-performance autonomous drone platform built for precision aerial mapping and environmental sensing.</p>
+      <div class="product-arrow">↗</div>
+    </div>
+    <div class="product-card">
+      <div class="product-num"><span>03</span><div class="product-dot"></div></div>
+      <div class="product-name">Visual Tracking</div>
+      <p class="product-desc">Real-time visual tracking and 3D mapping system. Onboard intelligence for awareness in complex environments.</p>
+      <div class="product-arrow">↗</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <h2>Backed by<span>.</span></h2>
+  </div>
+  <div class="funders-row">
+    <div class="funder-pill">NASA</div>
+    <div class="funder-pill">AFRL</div>
+    <div class="funder-pill">NSF</div>
+    <div class="funder-label">$5M+ in grants &amp; contracts from leading U.S. government research agencies</div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">Rational<span style="color:var(--accent)">Cyphy</span></div>
+  <div class="footer-meta">Urbana-Champaign, IL &nbsp;·&nbsp; test@rationalcyphy.ai &nbsp;·&nbsp; © 2025</div>
+</footer>
+
+</body>
+</html>

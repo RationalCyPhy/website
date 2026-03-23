@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style E — Point Cloud Hybrid</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #060810;
+    --card: #0d0f1a;
+    --card-hi: #121525;
+    --border: rgba(255,255,255,0.06);
+    --border-hi: rgba(99,179,237,0.2);
+    --accent: #63b3ed;
+    --accent2: #9f7aea;
+    --green: #48bb78;
+    --text: #e8edf8;
+    --muted: #4a5568;
+    --sans: 'Inter', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(6,8,16,0.7);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+  }
+
+  .logo {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text);
+  }
+
+  .logo em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  nav ul { display: flex; gap: 36px; list-style: none; align-items: center; }
+
+  nav a {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--text); }
+
+  .nav-contact {
+    background: rgba(99,179,237,0.1) !important;
+    color: var(--accent) !important;
+    border: 1px solid rgba(99,179,237,0.3);
+    padding: 7px 18px;
+    border-radius: 6px;
+    font-weight: 600 !important;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  #point-cloud-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* radial fade on right side so text is readable */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(6,8,16,0.92) 0%,
+      rgba(6,8,16,0.75) 38%,
+      rgba(6,8,16,0.1) 65%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 64px;
+    max-width: 620px;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tag-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.6); }
+  }
+
+  h1 {
+    font-size: clamp(38px, 5.5vw, 72px);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+
+  h1 strong {
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    line-height: 1.75;
+    color: rgba(232,237,248,0.55);
+    margin-bottom: 40px;
+    max-width: 480px;
+  }
+
+  .cta-row { display: flex; gap: 12px; align-items: center; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #060810;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: var(--sans);
+    cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: rgba(232,237,248,0.6);
+    border: 1px solid var(--border);
+    padding: 13px 28px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--sans);
+    cursor: pointer;
+  }
+
+  /* hero caption bottom-right */
+  .hero-caption {
+    position: absolute;
+    bottom: 36px;
+    right: 48px;
+    z-index: 3;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: rgba(99,179,237,0.35);
+    letter-spacing: 0.08em;
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* ─── STATS STRIP ─── */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat-cell {
+    padding: 32px 48px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .stat-cell:last-child { border-right: none; }
+
+  .stat-num {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .stat-num span { color: var(--accent); }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ─── BENTO ─── */
+  .bento {
+    padding: 48px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 72px;
+    gap: 10px;
+  }
+
+  .tile {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.25s, background 0.25s;
+  }
+
+  .tile:hover {
+    border-color: var(--border-hi);
+    background: var(--card-hi);
+  }
+
+  /* Gaussian splat showcase tile */
+  .tile-splat {
+    grid-column: 1 / 8;
+    grid-row: 1 / 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: var(--card);
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .splat-preview {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 40%, rgba(99,179,237,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 70% 60%, rgba(159,122,234,0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 60% at 30% 70%, rgba(72,187,120,0.06) 0%, transparent 60%);
+  }
+
+  /* Fake splat dots */
+  .splat-dots {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .sdot {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(var(--blur));
+    opacity: var(--op);
+    background: var(--col);
+    width: var(--sz);
+    height: var(--sz);
+  }
+
+  .splat-overlay {
+    position: relative;
+    z-index: 2;
+    padding: 28px 32px;
+    background: linear-gradient(to top, rgba(13,15,26,0.9) 0%, transparent 100%);
+  }
+
+  .splat-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .splat-tag::before {
+    content: '◈';
+    font-size: 12px;
+  }
+
+  .splat-title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .splat-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* RTAEval tile */
+  .tile-rtaeval {
+    grid-column: 8 / 13;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Drone tile */
+  .tile-drone {
+    grid-column: 8 / 11;
+    grid-row: 3 / 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Visual tracking tile */
+  .tile-visual {
+    grid-column: 11 / 13;
+    grid-row: 3 / 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Funding tile */
+  .tile-funding {
+    grid-column: 1 / 5;
+    grid-row: 5 / 7;
+    background: linear-gradient(135deg, rgba(99,179,237,0.08), rgba(159,122,234,0.08));
+    border-color: rgba(99,179,237,0.12);
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .funding-big {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .funding-big span { color: var(--accent); }
+
+  .funding-meta { display: flex; flex-direction: column; gap: 4px; }
+
+  .funding-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .funder-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+
+  .chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--border-hi);
+    color: var(--accent);
+    background: rgba(99,179,237,0.06);
+  }
+
+  /* Research tile */
+  .tile-research {
+    grid-column: 5 / 9;
+    grid-row: 5 / 7;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Team tile */
+  .tile-team {
+    grid-column: 9 / 13;
+    grid-row: 5 / 7;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .tile-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tlabel-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .tlabel-dot.green { background: var(--green); }
+  .tlabel-dot.purple { background: var(--accent2); }
+
+  .tile-name {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .tile-desc {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .tile-arrow {
+    font-size: 16px;
+    color: var(--accent);
+    margin-top: 12px;
+    display: inline-block;
+    opacity: 0.7;
+  }
+
+  .pub-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .pub-item {
+    font-size: 12px;
+    color: rgba(232,237,248,0.5);
+    line-height: 1.5;
+    padding-left: 12px;
+    border-left: 2px solid rgba(99,179,237,0.25);
+  }
+
+  .avatars { display: flex; margin-top: 12px; }
+
+  .avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+    margin-right: -8px;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .style-badge {
+    position: fixed; bottom: 24px; right: 24px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: #060810;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-weight: 600;
+    z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div class="style-badge">STYLE E — POINT CLOUD HYBRID</div>
+
+<nav>
+  <div class="logo">Rational<em>Cyphy</em></div>
+  <ul>
+    <li><a href="#">Research</a></li>
+    <li><a href="#">Technology</a></li>
+    <li><a href="#">Team</a></li>
+    <li><a class="nav-contact" href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO with canvas point cloud ── -->
+<section class="hero">
+  <canvas id="point-cloud-canvas"></canvas>
+
+  <div class="hero-content">
+    <div class="hero-tag">
+      <div class="tag-dot"></div>
+      Physical Intelligence · Urbana-Champaign
+    </div>
+    <h1>Autonomous<br>systems built<br>to be <strong>verified</strong></h1>
+    <p class="hero-sub">We build powerful drones, their autonomy stacks, and rigorous tooling to design, verify, and reason about AI-enabled systems — from hardware to formal assurance.</p>
+    <div class="cta-row">
+      <button class="btn-primary">Our Technology</button>
+      <button class="btn-ghost">Research &amp; Papers</button>
+    </div>
+  </div>
+
+  <div class="hero-caption">
+    3D Gaussian Splat · Point Cloud<br>
+    Visual Mapping System<br>
+    Rational Cyphy © 2025
+  </div>
+</section>
+
+<div class="stats-strip">
+  <div class="stat-cell">
+    <div class="stat-num">$5<span>M+</span></div>
+    <div class="stat-label">Total Funding</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num" style="font-size:24px;letter-spacing:0.02em">NASA · AFRL · NSF</div>
+    <div class="stat-label">Government Backers</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">3</div>
+    <div class="stat-label">Core Technologies</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">5</div>
+    <div class="stat-label">Team Members</div>
+  </div>
+</div>
+
+<div class="bento">
+
+  <!-- Gaussian splat showcase -->
+  <div class="tile tile-splat">
+    <div class="splat-preview"></div>
+    <div class="splat-dots" id="splat-dots"></div>
+    <div class="splat-overlay">
+      <div class="splat-tag">3D Gaussian Splatting · Live Demo</div>
+      <div class="splat-title">Visual Tracking &amp; Mapping</div>
+      <p class="splat-desc">Real-time 3D reconstruction using neural radiance fields and Gaussian splat representations. Onboard intelligence for precision mapping in complex environments.</p>
+    </div>
+  </div>
+
+  <!-- RTAEval -->
+  <div class="tile tile-rtaeval">
+    <div class="tile-label"><div class="tlabel-dot"></div>Safety Assurance</div>
+    <div>
+      <div class="tile-name">RTAEval</div>
+      <p class="tile-desc">Formal verification tooling for AI-enabled autonomy. Evaluate and certify safety properties of runtime assurance architectures.</p>
+    </div>
+    <div class="tile-arrow">↗</div>
+  </div>
+
+  <!-- Drone -->
+  <div class="tile tile-drone">
+    <div class="tile-label"><div class="tlabel-dot green"></div>Hardware</div>
+    <div class="tile-name">Mapping Drone</div>
+    <p class="tile-desc" style="font-size:12px">High-performance autonomous drone for precision aerial mapping.</p>
+    <div class="tile-arrow">↗</div>
+  </div>
+
+  <!-- Visual tracking shortcut -->
+  <div class="tile tile-visual">
+    <div class="tile-label"><div class="tlabel-dot purple"></div>Vision</div>
+    <div class="tile-name" style="font-size:15px">Visual<br>Tracking</div>
+    <div class="tile-arrow">↗</div>
+  </div>
+
+  <!-- Funding -->
+  <div class="tile tile-funding">
+    <div class="funding-big"><span>$5M+</span></div>
+    <div class="funding-meta">
+      <div class="funding-label">Funded by</div>
+      <div class="funder-chips">
+        <div class="chip">NASA</div>
+        <div class="chip">AFRL</div>
+        <div class="chip">NSF</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Research -->
+  <div class="tile tile-research">
+    <div class="tile-label"><div class="tlabel-dot"></div>Research</div>
+    <div class="pub-list">
+      <div class="pub-item">Runtime Assurance for AI-enabled Autonomy</div>
+      <div class="pub-item">3DGS-based Aerial Mapping Pipelines</div>
+      <div class="pub-item">Formal Verification of Autonomy Stacks</div>
+    </div>
+    <div class="tile-arrow">View all publications ↗</div>
+  </div>
+
+  <!-- Team -->
+  <div class="tile tile-team">
+    <div class="tile-label"><div class="tlabel-dot green"></div>Team</div>
+    <div>
+      <div class="tile-name">4 FTEs · 1 Intern</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">2 co-founders · Urbana-Champaign, IL</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;margin-top:16px">
+      <div class="avatars">
+        <div class="avatar" style="background:linear-gradient(135deg,#63b3ed,#9f7aea)">CF</div>
+        <div class="avatar" style="background:linear-gradient(135deg,#48bb78,#38a169)">CF</div>
+        <div class="avatar" style="background:linear-gradient(135deg,#f6ad55,#ed8936)">E</div>
+        <div class="avatar" style="background:linear-gradient(135deg,#76e4f7,#0bc5ea)">E</div>
+        <div class="avatar" style="background:linear-gradient(135deg,#fc8181,#e53e3e)">I</div>
+      </div>
+      <div style="font-size:11px;color:var(--muted)">Meet the team →</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="logo">Rational<em>Cyphy</em></div>
+  <div class="footer-meta">Urbana-Champaign, IL &nbsp;·&nbsp; test@rationalcyphy.ai &nbsp;·&nbsp; © 2025</div>
+</footer>
+
+<script>
+// ─── 3D POINT CLOUD ANIMATION ───────────────────────────────────────────────
+(function() {
+  const canvas = document.getElementById('point-cloud-canvas');
+  const ctx = canvas.getContext('2d');
+
+  let W, H, cx, cy;
+  let points = [];
+  let angle = 0;
+  const N = 1800;
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+    cx = W / 2;
+    cy = H / 2;
+  }
+
+  // Generate a point cloud that looks like a scanned environment:
+  // mix of a ground plane + some vertical structures + scattered cloud
+  function generatePoints() {
+    points = [];
+
+    // Ground plane cluster
+    for (let i = 0; i < N * 0.35; i++) {
+      const r = Math.random() * 2.2;
+      const theta = Math.random() * Math.PI * 2;
+      points.push({
+        x: r * Math.cos(theta) + (Math.random() - 0.5) * 0.3,
+        y: -0.9 + (Math.random() - 0.5) * 0.15,
+        z: r * Math.sin(theta) + (Math.random() - 0.5) * 0.3,
+        type: 'ground'
+      });
+    }
+
+    // Object / structure cloud (sphere-ish cluster, offset)
+    for (let i = 0; i < N * 0.30; i++) {
+      const phi = Math.acos(2 * Math.random() - 1);
+      const theta = Math.random() * Math.PI * 2;
+      const r = 0.5 + Math.random() * 0.4;
+      const cx2 = 0.6, cy2 = 0.1, cz2 = 0.3;
+      points.push({
+        x: cx2 + r * Math.sin(phi) * Math.cos(theta),
+        y: cy2 + r * Math.cos(phi) * 0.7,
+        z: cz2 + r * Math.sin(phi) * Math.sin(theta),
+        type: 'object'
+      });
+    }
+
+    // Scattered far-field points
+    for (let i = 0; i < N * 0.35; i++) {
+      points.push({
+        x: (Math.random() - 0.5) * 5,
+        y: (Math.random() - 0.5) * 2.5,
+        z: (Math.random() - 0.5) * 5,
+        type: 'scatter'
+      });
+    }
+  }
+
+  function project(px, py, pz, rotY) {
+    // rotate around Y
+    const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+    const rx = px * cosY - pz * sinY;
+    const rz = px * sinY + pz * cosY;
+
+    // slight tilt (rotate around X by ~20°)
+    const tilt = 0.35;
+    const cosX = Math.cos(tilt), sinX = Math.sin(tilt);
+    const ry2 = py * cosX - rz * sinX;
+    const rz2 = py * sinX + rz * cosX;
+
+    // perspective
+    const fov = 460;
+    const depth = fov / (fov + rz2 * 80 + 200);
+
+    // shift center slightly right so text doesn't overlap
+    const screenX = cx + rx * depth * 220 + W * 0.2;
+    const screenY = cy + ry2 * depth * 220;
+
+    return { sx: screenX, sy: screenY, depth: depth, z: rz2, ry: ry2 };
+  }
+
+  function colorForPoint(p, proj) {
+    // height-based color gradient: ground=teal/blue, mid=cyan, high=violet
+    const t = (p.y + 1.0) / 2.2; // 0..1
+    if (p.type === 'scatter') {
+      return `rgba(99,179,237,${0.08 + proj.depth * 0.15})`;
+    }
+    if (p.type === 'ground') {
+      const alpha = 0.25 + proj.depth * 0.5;
+      return `rgba(72,187,120,${alpha * 0.7})`;
+    }
+    // object cluster: cyan→violet gradient
+    const r = Math.round(99 + (159 - 99) * t);
+    const g = Math.round(179 + (122 - 179) * t);
+    const b = Math.round(237 + (234 - 237) * t);
+    return `rgba(${r},${g},${b},${0.35 + proj.depth * 0.55})`;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Sort back-to-front
+    const projected = points.map(p => {
+      const pr = project(p.x, p.y, p.z, angle);
+      return { p, pr };
+    }).sort((a, b) => a.pr.z - b.pr.z);
+
+    for (const { p, pr } of projected) {
+      const { sx, sy, depth } = pr;
+
+      // clip to canvas
+      if (sx < -20 || sx > W + 20 || sy < -20 || sy > H + 20) continue;
+
+      const size = p.type === 'object'
+        ? (1.2 + depth * 3) * devicePixelRatio * 0.7
+        : (0.6 + depth * 2) * devicePixelRatio * 0.7;
+
+      ctx.beginPath();
+      ctx.arc(sx, sy, Math.max(0.4, size), 0, Math.PI * 2);
+      ctx.fillStyle = colorForPoint(p, pr);
+      ctx.fill();
+    }
+
+    // Very slow rotation
+    angle += 0.0018;
+  }
+
+  function loop() {
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('resize', () => { resize(); });
+  resize();
+  generatePoints();
+  loop();
+})();
+
+// ─── BENTO SPLAT DOTS (static decorative) ────────────────────────────────────
+(function() {
+  const container = document.getElementById('splat-dots');
+  const colors = ['#63b3ed','#9f7aea','#48bb78','#f6ad55','#76e4f7','#fc8181'];
+  for (let i = 0; i < 180; i++) {
+    const d = document.createElement('div');
+    d.className = 'sdot';
+    const sz = (2 + Math.random() * 18) + 'px';
+    d.style.setProperty('--sz', sz);
+    d.style.setProperty('--blur', (1 + Math.random() * 6) + 'px');
+    d.style.setProperty('--op', (0.06 + Math.random() * 0.22).toFixed(2));
+    d.style.setProperty('--col', colors[Math.floor(Math.random() * colors.length)]);
+    d.style.left = (Math.random() * 100) + '%';
+    d.style.top = (Math.random() * 100) + '%';
+    container.appendChild(d);
+  }
+})();
+</script>
+
+</body>
+</html>

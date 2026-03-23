@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style D — Bento/Modular</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0e0e12;
+    --card: #14141a;
+    --card2: #1a1a24;
+    --border: rgba(255,255,255,0.07);
+    --accent: #7c6dfa;
+    --accent2: #a78bfa;
+    --green: #34d399;
+    --orange: #fb923c;
+    --text: #f0f0f8;
+    --muted: #5a5a72;
+    --sans: 'Inter', sans-serif;
+    --mono: 'DM Mono', monospace;
+    --radius: 16px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .logo span {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  nav ul {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    align-items: center;
+  }
+
+  nav a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  nav a:hover { color: var(--text); }
+
+  .nav-pill {
+    background: var(--accent) !important;
+    color: white !important;
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-weight: 600 !important;
+  }
+
+  /* Bento grid */
+  .bento {
+    padding: 32px 40px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 80px;
+    gap: 12px;
+  }
+
+  .tile {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .tile:hover {
+    border-color: rgba(124,109,250,0.3);
+    transform: translateY(-2px);
+  }
+
+  /* Hero tile */
+  .tile-hero {
+    grid-column: 1 / 8;
+    grid-row: 1 / 6;
+    background: linear-gradient(135deg, #14141a 0%, #1a1430 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .tile-hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, rgba(124,109,250,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent2);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .tile-hero h1 {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .tile-hero h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .tile-hero p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 440px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    position: relative;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--sans);
+    cursor: pointer;
+  }
+
+  .btn-ghost {
+    background: rgba(255,255,255,0.06);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--sans);
+    cursor: pointer;
+  }
+
+  /* Funding tile */
+  .tile-funding {
+    grid-column: 8 / 13;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .funding-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .funding-num {
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .funding-num span {
+    background: linear-gradient(90deg, var(--green), #6ee7b7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .funding-sub {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* Location tile */
+  .tile-location {
+    grid-column: 8 / 10;
+    grid-row: 3 / 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #141a20, #0e1420);
+  }
+
+  /* Funders tile */
+  .tile-funders {
+    grid-column: 10 / 13;
+    grid-row: 3 / 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .funder-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .chip {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .chip.accent { background: rgba(124,109,250,0.15); border-color: rgba(124,109,250,0.3); color: var(--accent2); }
+
+  /* Product tiles */
+  .tile-product-1 {
+    grid-column: 8 / 13;
+    grid-row: 5 / 7;
+    background: linear-gradient(135deg, #14141a, #1a1426);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .tile-product-2 {
+    grid-column: 1 / 5;
+    grid-row: 6 / 9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .tile-product-3 {
+    grid-column: 5 / 9;
+    grid-row: 6 / 9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Team tile */
+  .tile-team {
+    grid-column: 9 / 13;
+    grid-row: 7 / 9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .tile-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .dot.green { background: var(--green); }
+  .dot.orange { background: var(--orange); }
+
+  .tile-name {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+
+  .tile-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .tile-arrow {
+    font-size: 20px;
+    color: var(--accent2);
+    margin-top: 16px;
+    display: inline-block;
+  }
+
+  .team-avatars {
+    display: flex;
+    margin-top: 12px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+    margin-right: -10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .av1 { background: linear-gradient(135deg, var(--accent), var(--accent2)); }
+  .av2 { background: linear-gradient(135deg, var(--green), #059669); }
+  .av3 { background: linear-gradient(135deg, var(--orange), #ea580c); }
+  .av4 { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+  .av5 { background: linear-gradient(135deg, #f472b6, #ec4899); }
+
+  .team-count {
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: 24px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Geo tile */
+  .map-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 3px;
+    margin-top: 12px;
+    flex: 1;
+  }
+
+  .map-cell {
+    background: rgba(255,255,255,0.03);
+    border-radius: 3px;
+    aspect-ratio: 1;
+  }
+
+  .map-cell.active {
+    background: var(--accent);
+    opacity: 0.7;
+  }
+
+  .map-cell.bright {
+    background: var(--accent2);
+    opacity: 1;
+  }
+
+  footer {
+    padding: 20px 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .style-badge {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--accent);
+    color: white;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-weight: 500;
+    z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div class="style-badge">STYLE D — BENTO/MODULAR</div>
+
+<nav>
+  <div class="logo">Rational<span>Cyphy</span></div>
+  <ul>
+    <li><a href="#">Products</a></li>
+    <li><a href="#">Research</a></li>
+    <li><a href="#">Team</a></li>
+    <li><a class="nav-pill" href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="bento">
+
+  <!-- Hero tile -->
+  <div class="tile tile-hero">
+    <div class="hero-eyebrow">Physical Intelligence Platform</div>
+    <h1>Build autonomous<br>systems you can <em>trust</em></h1>
+    <p>Powerful drones, autonomy stacks, and rigorous tooling to design, verify, and reason about AI-enabled systems.</p>
+    <div class="cta-row">
+      <button class="btn-primary">Explore Products</button>
+      <button class="btn-ghost">Our Research</button>
+    </div>
+  </div>
+
+  <!-- Funding tile -->
+  <div class="tile tile-funding">
+    <div class="funding-label">Total Funding</div>
+    <div>
+      <div class="funding-num"><span>$5M+</span></div>
+      <div class="funding-sub">NASA · AFRL · NSF</div>
+    </div>
+  </div>
+
+  <!-- Location tile -->
+  <div class="tile tile-location">
+    <div class="tile-label"><div class="dot green"></div> HQ Location</div>
+    <div>
+      <div style="font-size:18px;font-weight:700;letter-spacing:-0.02em">Urbana-Champaign</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">Illinois, USA</div>
+    </div>
+    <div class="map-grid">
+      <div class="map-cell"></div><div class="map-cell active"></div><div class="map-cell"></div><div class="map-cell active"></div><div class="map-cell"></div><div class="map-cell"></div>
+      <div class="map-cell active"></div><div class="map-cell bright"></div><div class="map-cell active"></div><div class="map-cell"></div><div class="map-cell active"></div><div class="map-cell"></div>
+      <div class="map-cell"></div><div class="map-cell active"></div><div class="map-cell"></div><div class="map-cell active"></div><div class="map-cell"></div><div class="map-cell active"></div>
+      <div class="map-cell active"></div><div class="map-cell"></div><div class="map-cell active"></div><div class="map-cell"></div><div class="map-cell active"></div><div class="map-cell"></div>
+    </div>
+  </div>
+
+  <!-- Funders tile -->
+  <div class="tile tile-funders">
+    <div class="tile-label"><div class="dot"></div> Backed by</div>
+    <div class="funder-chips">
+      <div class="chip accent">NASA</div>
+      <div class="chip accent">AFRL</div>
+      <div class="chip accent">NSF</div>
+      <div class="chip">Gov't Contracts</div>
+      <div class="chip">Research Grants</div>
+    </div>
+  </div>
+
+  <!-- RTAEval tile (wide) -->
+  <div class="tile tile-product-1">
+    <div class="tile-label"><div class="dot"></div> Safety Assurance · Product 01</div>
+    <div>
+      <div class="tile-name">RTAEval</div>
+      <div class="tile-desc">Formal verification and assurance tooling for AI-enabled autonomy stacks. Evaluate safety properties of runtime architectures.</div>
+    </div>
+    <div class="tile-arrow">↗</div>
+  </div>
+
+  <!-- Mapping Drone tile -->
+  <div class="tile tile-product-2">
+    <div class="tile-label"><div class="dot orange"></div> Hardware · Product 02</div>
+    <div class="tile-name">Mapping Drone</div>
+    <div class="tile-desc">High-performance autonomous drone for precision aerial mapping and environmental sensing.</div>
+    <div class="tile-arrow">↗</div>
+  </div>
+
+  <!-- Visual Tracking tile -->
+  <div class="tile tile-product-3">
+    <div class="tile-label"><div class="dot green"></div> Perception · Product 03</div>
+    <div class="tile-name">Visual Tracking &amp; Mapping</div>
+    <div class="tile-desc">Real-time visual tracking and 3D mapping with onboard intelligence for complex environments.</div>
+    <div class="tile-arrow">↗</div>
+  </div>
+
+  <!-- Team tile -->
+  <div class="tile tile-team">
+    <div class="tile-label"><div class="dot"></div> The Team</div>
+    <div>
+      <div style="font-size:18px;font-weight:700;letter-spacing:-0.02em">4 FTEs · 1 Intern</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">2 co-founders · Urbana-Champaign</div>
+    </div>
+    <div style="display:flex;align-items:center">
+      <div class="team-avatars">
+        <div class="avatar av1">CF</div>
+        <div class="avatar av2">CF</div>
+        <div class="avatar av3">E</div>
+        <div class="avatar av4">E</div>
+        <div class="avatar av5">I</div>
+      </div>
+      <div class="team-count">Meet the team →</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="logo">Rational<span>Cyphy</span></div>
+  <div class="footer-meta">Urbana-Champaign, IL &nbsp;·&nbsp; test@rationalcyphy.ai &nbsp;·&nbsp; © 2025</div>
+</footer>
+
+</body>
+</html>

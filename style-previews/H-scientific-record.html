@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style H — Scientific Record</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --paper:  #faf8f4;
+    --paper2: #f2efe8;
+    --ink:    #120f0a;
+    --ink2:   #3a352c;
+    --muted:  #8a8070;
+    --rule:   #d4cec4;
+    --accent: #8b1a1a;   /* deep burgundy — single accent */
+    --sans:   'IBM Plex Sans', sans-serif;
+    --serif:  'Source Serif 4', serif;
+    --mono:   'IBM Plex Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  /* ── HEADER ── */
+  header {
+    border-bottom: 2px solid var(--ink);
+    padding: 0 64px;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .journal-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .header-nav {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .header-nav a {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .header-nav a:hover { color: var(--ink); }
+
+  .header-nav .active { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
+
+  .header-main {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 24px 0 20px;
+  }
+
+  .wordmark {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .wordmark em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .header-tagline {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+    letter-spacing: 0.04em;
+    line-height: 1.8;
+  }
+
+  /* ── HERO — two column editorial ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 0;
+    padding: 56px 64px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero-main {
+    padding-right: 56px;
+    border-right: 1px solid var(--rule);
+  }
+
+  .article-type {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .article-type::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4.5vw, 60px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+
+  h1 em { color: var(--accent); }
+
+  .hero-deck {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink2);
+    font-weight: 300;
+    margin-bottom: 32px;
+    font-style: italic;
+    border-left: 3px solid var(--accent);
+    padding-left: 20px;
+  }
+
+  .hero-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--ink2);
+    columns: 2;
+    column-gap: 32px;
+    margin-bottom: 36px;
+  }
+
+  .cta-row { display: flex; gap: 16px; }
+
+  .btn {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 11px 28px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+  }
+
+  .btn-solid { background: var(--ink); color: var(--paper); }
+  .btn-solid:hover { background: var(--ink2); }
+  .btn-outline { background: transparent; border: 1px solid var(--rule); color: var(--ink2); }
+  .btn-outline:hover { border-color: var(--ink); }
+
+  /* Sidebar */
+  .hero-sidebar {
+    padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .sidebar-section { }
+
+  .sidebar-label {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 14px;
+  }
+
+  .stat-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 13px;
+  }
+
+  .stat-key { color: var(--muted); font-family: var(--sans); font-size: 12px; }
+  .stat-val { font-family: var(--mono); font-size: 13px; color: var(--ink); font-weight: 500; }
+  .stat-val em { color: var(--accent); font-style: normal; }
+
+  .funder-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .funder-item {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .funder-abbr {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    min-width: 40px;
+  }
+
+  .funder-name {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 64px;
+    height: 44px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .divider-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    opacity: 0.8;
+  }
+
+  .divider-title {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(250,248,244,0.6);
+  }
+
+  /* ── TECHNOLOGY TABLE ── */
+  .tech-section {
+    padding: 0 64px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .tech-entry {
+    display: grid;
+    grid-template-columns: 28px 200px 1fr 120px;
+    gap: 32px;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+
+  .tech-entry:last-child { border-bottom: none; }
+
+  .entry-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--rule);
+    padding-top: 4px;
+  }
+
+  .entry-head {
+    padding-right: 0;
+  }
+
+  .entry-name {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .entry-type {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .entry-abstract {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--ink2);
+  }
+
+  .entry-abstract strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .entry-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-end;
+  }
+
+  .tag {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--rule);
+    padding: 3px 10px;
+  }
+
+  /* ── RESEARCH NOTE ── */
+  .research-note {
+    padding: 48px 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+
+  .pub-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+
+  .pub-item {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .pub-item:last-child { border-bottom: none; }
+
+  .pub-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--rule);
+    padding-top: 2px;
+  }
+
+  .pub-title {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+
+  .pub-meta {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .location-block {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .location-detail {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink2);
+  }
+
+  .coords {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 2px solid var(--ink);
+    padding: 20px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .style-badge {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 8px 16px;
+    z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div class="style-badge">STYLE H — SCIENTIFIC RECORD</div>
+
+<header>
+  <div class="header-top">
+    <div class="journal-meta">Physical Intelligence · Urbana-Champaign, IL · Est. 2020</div>
+    <ul class="header-nav">
+      <li><a href="#" class="active">Research</a></li>
+      <li><a href="#">Technology</a></li>
+      <li><a href="#">Team</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="journal-meta">$5M+ · NASA · AFRL · NSF</div>
+  </div>
+  <div class="header-main">
+    <div class="wordmark">Rational<em>Cyphy</em></div>
+    <div class="header-tagline">
+      Physical Intelligence &amp; Autonomous Systems<br>
+      Design · Verification · Assurance
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-main">
+    <div class="article-type">Platform Overview</div>
+    <h1>Autonomous systems<br>built to be <em>trusted</em></h1>
+    <p class="hero-deck">We build powerful drones, their autonomy stacks, and the rigorous tooling to design, verify, and reason about AI-enabled systems.</p>
+    <p class="hero-body">
+      Rational Cyphy develops physical intelligence platforms at the intersection of robotics, formal methods, and machine learning. Our work spans the full stack — from custom drone hardware and onboard perception systems to formal verification tools that provide provable safety guarantees for AI-enabled autonomy. Backed by NASA, AFRL, and NSF, we are based at the University of Illinois at Urbana-Champaign.
+    </p>
+    <div class="cta-row">
+      <button class="btn btn-solid">Technology</button>
+      <button class="btn btn-outline">Publications</button>
+    </div>
+  </div>
+
+  <div class="hero-sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Key Figures</div>
+      <div class="stat-block">
+        <div class="stat-row">
+          <span class="stat-key">Total Funding</span>
+          <span class="stat-val"><em>$5M+</em></span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-key">Team Size</span>
+          <span class="stat-val">4 FTE + 1 intern</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-key">Core Technologies</span>
+          <span class="stat-val">3</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-key">Location</span>
+          <span class="stat-val">Urbana-Champaign</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Funding Sources</div>
+      <div class="funder-list">
+        <div class="funder-item">
+          <span class="funder-abbr">NASA</span>
+          <span class="funder-name">National Aeronautics and Space Administration</span>
+        </div>
+        <div class="funder-item">
+          <span class="funder-abbr">AFRL</span>
+          <span class="funder-name">Air Force Research Laboratory</span>
+        </div>
+        <div class="funder-item">
+          <span class="funder-abbr">NSF</span>
+          <span class="funder-name">National Science Foundation</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Contact</div>
+      <div style="font-family:var(--mono);font-size:12px;color:var(--ink2);line-height:2">
+        test@rationalcyphy.ai<br>
+        Urbana-Champaign, IL
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider">
+  <span class="divider-num">§ 02</span>
+  <span class="divider-title">Technology Platform</span>
+</div>
+
+<div class="tech-section">
+  <div class="tech-entry">
+    <div class="entry-num">[1]</div>
+    <div class="entry-head">
+      <div class="entry-name">RTAEval</div>
+      <div class="entry-type">Safety Assurance</div>
+    </div>
+    <div class="entry-abstract">
+      <strong>RTAEval</strong> is a formal assurance tool for AI-enabled autonomy stacks. It enables systematic evaluation and verification of safety properties in runtime assurance (RTA) architectures — providing rigorous, certifiable guarantees for autonomous systems operating in safety-critical environments.
+    </div>
+    <div class="entry-tags">
+      <span class="tag">Formal Methods</span>
+      <span class="tag">AI Safety</span>
+      <span class="tag">Verification</span>
+    </div>
+  </div>
+
+  <div class="tech-entry">
+    <div class="entry-num">[2]</div>
+    <div class="entry-head">
+      <div class="entry-name">Mapping Drone</div>
+      <div class="entry-type">Hardware Platform</div>
+    </div>
+    <div class="entry-abstract">
+      A high-performance autonomous drone platform engineered for precision aerial mapping and environmental data acquisition. The system integrates custom sensing, onboard compute, and a full autonomy stack designed for demanding real-world operational conditions.
+    </div>
+    <div class="entry-tags">
+      <span class="tag">Hardware</span>
+      <span class="tag">Autonomy</span>
+      <span class="tag">Sensing</span>
+    </div>
+  </div>
+
+  <div class="tech-entry">
+    <div class="entry-num">[3]</div>
+    <div class="entry-head">
+      <div class="entry-name">Visual Tracking &amp; Mapping</div>
+      <div class="entry-type">Perception System</div>
+    </div>
+    <div class="entry-abstract">
+      Real-time 3D visual tracking and environment mapping using <strong>3D Gaussian Splatting</strong>. The system delivers high-fidelity spatial reconstruction and object tracking for onboard situational awareness in complex, dynamic scenes — enabling precise measurement and navigation.
+    </div>
+    <div class="entry-tags">
+      <span class="tag">3DGS</span>
+      <span class="tag">Perception</span>
+      <span class="tag">SLAM</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider">
+  <span class="divider-num">§ 03</span>
+  <span class="divider-title">Research &amp; Location</span>
+</div>
+
+<div class="research-note">
+  <div>
+    <h2>Selected Research</h2>
+    <ul class="pub-list">
+      <li class="pub-item">
+        <span class="pub-num">[1]</span>
+        <div>
+          <div class="pub-title">Runtime Assurance Architectures for AI-Enabled Autonomous Systems</div>
+          <div class="pub-meta">Funded by NASA · In review</div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-num">[2]</span>
+        <div>
+          <div class="pub-title">3D Gaussian Splatting for Precision Aerial Mapping</div>
+          <div class="pub-meta">Funded by AFRL · Proceedings 2024</div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <span class="pub-num">[3]</span>
+        <div>
+          <div class="pub-title">Formal Verification of Learning-Enabled Autonomy Stacks</div>
+          <div class="pub-meta">Funded by NSF · Workshop paper 2024</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="location-block">
+    <h2>About</h2>
+    <div class="location-detail">
+      Rational Cyphy is a physical intelligence company developing autonomous systems with provable safety guarantees. We are a team of 4 full-time researchers and engineers, including 2 co-founders, based at the University of Illinois at Urbana-Champaign.
+    </div>
+    <div class="coords">
+      40.1020° N, 88.2272° W<br>
+      Urbana-Champaign, Illinois
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wordmark" style="font-size:18px">Rational<em style="font-style:italic;color:var(--accent)">Cyphy</em></div>
+  <div class="footer-meta">Urbana-Champaign, IL &nbsp;·&nbsp; test@rationalcyphy.ai &nbsp;·&nbsp; © 2025 Rational Cyphy</div>
+</footer>
+
+</body>
+</html>

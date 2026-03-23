@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style F — HUD / Blueprint</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #020b14;
+    --bg2: #041120;
+    --cyan: #00e5ff;
+    --cyan2: #00b4d8;
+    --green: #00ff9f;
+    --amber: #ffb703;
+    --red: #ff4560;
+    --text: #cce8f4;
+    --muted: #2a5470;
+    --border: rgba(0,229,255,0.1);
+    --border2: rgba(0,229,255,0.2);
+    --mono: 'Share Tech Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 48px;
+    background: rgba(2,11,20,0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cyan);
+  }
+
+  nav ul { display: flex; gap: 40px; list-style: none; }
+
+  nav a {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--cyan); }
+
+  /* status bar right */
+  .nav-status {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .status-item {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 6px var(--green);
+    animation: blink 2.5s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 64px;
+    overflow: hidden;
+  }
+
+  /* Background grid */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* Radar canvas */
+  #radar-canvas {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 480px;
+    height: 480px;
+  }
+
+  /* Corner brackets */
+  .bracket {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: var(--cyan);
+    border-style: solid;
+    opacity: 0.4;
+  }
+  .bracket-tl { top: 80px; left: 48px; border-width: 1px 0 0 1px; }
+  .bracket-tr { top: 80px; right: 48px; border-width: 1px 1px 0 0; }
+  .bracket-bl { bottom: 40px; left: 48px; border-width: 0 0 1px 1px; }
+  .bracket-br { bottom: 40px; right: 48px; border-width: 0 1px 1px 0; }
+
+  /* Crosshair on radar center */
+  .crosshair {
+    position: absolute;
+    right: calc(60px + 240px - 1px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 32px;
+    background: linear-gradient(to bottom, transparent, var(--cyan), transparent);
+    z-index: 10;
+  }
+
+  .crosshair-h {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    width: 480px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(0,229,255,0.3), transparent);
+    z-index: 10;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 5;
+    max-width: 560px;
+  }
+
+  .sys-id {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-tag::before {
+    content: '▶';
+    font-size: 8px;
+    color: var(--green);
+  }
+
+  h1 {
+    font-size: clamp(36px, 5.5vw, 68px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 28px;
+  }
+
+  h1 .hi {
+    color: var(--cyan);
+    font-weight: 600;
+  }
+
+  .hero-sub {
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 40px;
+    max-width: 460px;
+  }
+
+  .hero-sub span { color: rgba(204,232,244,0.5); }
+
+  .cta-row { display: flex; gap: 16px; align-items: center; }
+
+  .btn-primary {
+    background: transparent;
+    color: var(--cyan);
+    border: 1px solid var(--cyan);
+    padding: 12px 32px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+
+  .btn-primary:hover { background: rgba(0,229,255,0.08); }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 1px;
+    background: var(--cyan);
+    animation: scan-line 3s linear infinite;
+  }
+
+  @keyframes scan-line {
+    to { left: 100%; }
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid rgba(0,229,255,0.12);
+    padding: 12px 32px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  /* Terminal readout */
+  .terminal {
+    position: absolute;
+    bottom: 40px;
+    left: 64px;
+    z-index: 5;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    line-height: 1.9;
+  }
+
+  .terminal .line { display: flex; gap: 12px; align-items: baseline; }
+  .terminal .key { color: rgba(0,229,255,0.3); min-width: 120px; }
+  .terminal .val { color: rgba(204,232,244,0.35); }
+  .terminal .ok { color: var(--green); }
+
+  /* ─── DATA PANELS ─── */
+  .panels {
+    padding: 0 48px 48px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+  }
+
+  .panel {
+    background: var(--bg);
+    padding: 36px 32px;
+    position: relative;
+    transition: background 0.2s;
+  }
+
+  .panel:hover { background: var(--bg2); }
+
+  /* top accent bar */
+  .panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--cyan), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .panel:hover::before { opacity: 1; }
+
+  .panel-id {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .panel-status {
+    font-size: 9px;
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .panel-status::before {
+    content: '◆';
+    font-size: 6px;
+  }
+
+  .panel-name {
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .panel-desc {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  .panel-cat {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cyan2);
+    padding: 5px 12px;
+    border: 1px solid rgba(0,180,216,0.2);
+    display: inline-block;
+  }
+
+  /* ─── FUNDERS ─── */
+  .funders-section {
+    padding: 48px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 64px;
+  }
+
+  .funders-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .funders-label::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--border2);
+  }
+
+  .funder-items {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .funder-item {
+    font-family: var(--mono);
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    color: rgba(204,232,244,0.3);
+    padding: 12px 24px;
+    border: 1px solid rgba(0,229,255,0.06);
+    transition: all 0.2s;
+  }
+
+  .funder-item:hover {
+    color: var(--cyan);
+    border-color: rgba(0,229,255,0.25);
+  }
+
+  .funding-big {
+    font-family: var(--mono);
+    font-size: 36px;
+    color: var(--cyan);
+    letter-spacing: -0.02em;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .funding-big small {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  .style-badge {
+    position: fixed; bottom: 24px; right: 24px;
+    background: rgba(0,229,255,0.1);
+    color: var(--cyan);
+    border: 1px solid rgba(0,229,255,0.3);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    padding: 8px 16px;
+    z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div class="style-badge">STYLE F — HUD / BLUEPRINT</div>
+
+<nav>
+  <div class="logo">RCP // Rational Cyphy</div>
+  <ul>
+    <li><a href="#">Research</a></li>
+    <li><a href="#">Technology</a></li>
+    <li><a href="#">Team</a></li>
+  </ul>
+  <div class="nav-status">
+    <div class="status-item"><div class="status-dot"></div> Systems Online</div>
+    <div class="status-item">UIUC · IL · USA</div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="bracket bracket-tl"></div>
+  <div class="bracket bracket-tr"></div>
+  <div class="bracket bracket-bl"></div>
+  <div class="bracket bracket-br"></div>
+  <div class="crosshair"></div>
+  <div class="crosshair-h"></div>
+
+  <canvas id="radar-canvas"></canvas>
+
+  <div class="hero-content">
+    <div class="sys-id">SYS // RCP-PLATFORM-v1.0</div>
+    <div class="hero-tag">Physical Intelligence</div>
+    <h1>Autonomous<br>systems that<br>earn <span class="hi">trust</span></h1>
+    <p class="hero-sub">
+      <span>Drones. Autonomy stacks.</span><br>
+      Design automation. Formal verification.<br>
+      AI assurance for the real world.
+    </p>
+    <div class="cta-row">
+      <button class="btn-primary">[ Enter ]</button>
+      <button class="btn-ghost">Research</button>
+    </div>
+  </div>
+
+  <div class="terminal">
+    <div class="line"><span class="key">STATUS</span><span class="ok">OPERATIONAL</span></div>
+    <div class="line"><span class="key">LOCATION</span><span class="val">40.1020°N 88.2272°W</span></div>
+    <div class="line"><span class="key">FUNDING</span><span class="val">$5M+ // NASA · AFRL · NSF</span></div>
+    <div class="line"><span class="key">PLATFORM</span><span class="val">PHYSICAL INTELLIGENCE</span></div>
+  </div>
+</section>
+
+<div class="panels">
+  <div class="panel">
+    <div class="panel-id">
+      <span>SYSTEM / 001</span>
+      <span class="panel-status">Active</span>
+    </div>
+    <div class="panel-name">RTAEval</div>
+    <p class="panel-desc">Formal assurance tooling for AI-enabled autonomy stacks. Verify safety properties of runtime assurance architectures.</p>
+    <span class="panel-cat">Safety Assurance</span>
+  </div>
+  <div class="panel">
+    <div class="panel-id">
+      <span>SYSTEM / 002</span>
+      <span class="panel-status">Active</span>
+    </div>
+    <div class="panel-name">Mapping Drone</div>
+    <p class="panel-desc">High-performance autonomous drone for precision aerial mapping and environmental intelligence.</p>
+    <span class="panel-cat">Hardware</span>
+  </div>
+  <div class="panel">
+    <div class="panel-id">
+      <span>SYSTEM / 003</span>
+      <span class="panel-status">Active</span>
+    </div>
+    <div class="panel-name">Visual Tracking &amp; Mapping</div>
+    <p class="panel-desc">Real-time visual tracking and 3D mapping. 3D Gaussian Splat-based environment reconstruction.</p>
+    <span class="panel-cat">Perception</span>
+  </div>
+</div>
+
+<div class="funders-section">
+  <div class="funders-label">Backed by</div>
+  <div class="funder-items">
+    <div class="funder-item">NASA</div>
+    <div class="funder-item">AFRL</div>
+    <div class="funder-item">NSF</div>
+  </div>
+  <div class="funding-big">
+    $5M+
+    <small>Grants &amp; Contracts</small>
+  </div>
+</div>
+
+<footer>
+  <div class="logo" style="font-size:12px">RCP // Rational Cyphy</div>
+  <div class="footer-meta">URBANA-CHAMPAIGN IL &nbsp;·&nbsp; test@rationalcyphy.ai &nbsp;·&nbsp; © 2025</div>
+</footer>
+
+<script>
+// ─── RADAR ANIMATION ─────────────────────────────────────────────────────────
+(function() {
+  const canvas = document.getElementById('radar-canvas');
+  const ctx = canvas.getContext('2d');
+  const SIZE = 480;
+  canvas.width = SIZE;
+  canvas.height = SIZE;
+  const R = SIZE / 2 - 20;
+  const cx = SIZE / 2, cy = SIZE / 2;
+
+  let sweepAngle = 0;
+  const RINGS = 4;
+  const blips = [];
+
+  // Static blips (targets on radar)
+  const blipDefs = [
+    { r: 0.42, a: 1.1 },
+    { r: 0.72, a: 2.4 },
+    { r: 0.55, a: 3.9 },
+    { r: 0.28, a: 0.4 },
+    { r: 0.88, a: 4.7 },
+    { r: 0.65, a: 5.6 },
+    { r: 0.35, a: 2.0 },
+    { r: 0.8,  a: 1.7 },
+    { r: 0.5,  a: 5.0 },
+  ];
+
+  blipDefs.forEach(b => {
+    blips.push({
+      x: cx + b.r * R * Math.cos(b.a),
+      y: cy + b.r * R * Math.sin(b.a),
+      angle: b.a,
+      fade: 0
+    });
+  });
+
+  function draw() {
+    ctx.clearRect(0, 0, SIZE, SIZE);
+
+    // Dark background
+    ctx.fillStyle = 'rgba(2, 11, 20, 0.95)';
+    ctx.beginPath();
+    ctx.arc(cx, cy, R + 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Rings
+    for (let i = 1; i <= RINGS; i++) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, (R / RINGS) * i, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(0, 229, 255, ${0.06 + i * 0.02})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    // Cross lines
+    ctx.strokeStyle = 'rgba(0, 229, 255, 0.06)';
+    ctx.lineWidth = 1;
+    [0, Math.PI/4, Math.PI/2, 3*Math.PI/4].forEach(a => {
+      ctx.beginPath();
+      ctx.moveTo(cx + R * Math.cos(a), cy + R * Math.sin(a));
+      ctx.lineTo(cx + R * Math.cos(a + Math.PI), cy + R * Math.sin(a + Math.PI));
+      ctx.stroke();
+    });
+
+    // Range labels
+    ctx.fillStyle = 'rgba(0, 229, 255, 0.2)';
+    ctx.font = '9px Share Tech Mono, monospace';
+    ctx.textAlign = 'right';
+    for (let i = 1; i <= RINGS; i++) {
+      const labelR = (R / RINGS) * i;
+      ctx.fillText(`${i * 250}m`, cx + labelR - 4, cy - 4);
+    }
+
+    // Sweep gradient (trailing glow)
+    const TRAIL = Math.PI * 0.75;
+    const grad = ctx.createConicalGradient
+      ? null // not universally supported
+      : null;
+
+    // Draw sweep trail as multiple arcs
+    for (let i = 0; i < 60; i++) {
+      const a = sweepAngle - (i / 60) * TRAIL;
+      const alpha = (1 - i / 60) * 0.18;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, R, a, a + (TRAIL / 60));
+      ctx.lineTo(cx, cy);
+      ctx.fillStyle = `rgba(0, 229, 255, ${alpha})`;
+      ctx.fill();
+    }
+
+    // Sweep line
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(
+      cx + R * Math.cos(sweepAngle),
+      cy + R * Math.sin(sweepAngle)
+    );
+    ctx.strokeStyle = 'rgba(0, 229, 255, 0.85)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Center dot
+    ctx.beginPath();
+    ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0,229,255,0.8)';
+    ctx.fill();
+
+    // Blips — light up when sweep passes over them
+    blips.forEach(blip => {
+      // normalize angles
+      const diff = ((blip.angle - sweepAngle) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+      if (diff < 0.08) {
+        blip.fade = 1.0;
+      }
+      if (blip.fade > 0) {
+        const size = 3 + blip.fade * 4;
+        ctx.beginPath();
+        ctx.arc(blip.x, blip.y, size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0, 255, 159, ${blip.fade * 0.8})`;
+        ctx.fill();
+
+        // glow ring
+        ctx.beginPath();
+        ctx.arc(blip.x, blip.y, size + 4, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(0, 255, 159, ${blip.fade * 0.3})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        blip.fade *= 0.985;
+      }
+    });
+
+    // Outer ring
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(0, 229, 255, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Tick marks around outer ring
+    ctx.strokeStyle = 'rgba(0, 229, 255, 0.2)';
+    ctx.lineWidth = 1;
+    for (let i = 0; i < 72; i++) {
+      const a = (i / 72) * Math.PI * 2;
+      const inner = i % 6 === 0 ? R - 10 : R - 5;
+      ctx.beginPath();
+      ctx.moveTo(cx + R * Math.cos(a), cy + R * Math.sin(a));
+      ctx.lineTo(cx + inner * Math.cos(a), cy + inner * Math.sin(a));
+      ctx.stroke();
+    }
+
+    sweepAngle += 0.022;
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+})();
+</script>
+
+</body>
+</html>

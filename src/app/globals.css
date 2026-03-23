@@ -1,26 +1,140 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ═══════════════════════════════════════════════════════════════════════════
+   THEME SYSTEM: Aerospace (default) + Consumer
+   Switch via: document.documentElement.setAttribute('data-theme', 'consumer')
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Aerospace Theme (default) ─── */
+:root,
+[data-theme="aerospace"] {
+  --bg:         #060810;
+  --bg2:        #0d0f1a;
+  --bg3:        #121525;
+  --card:       #0d0f1a;
+  --card-hi:    #121525;
+  --border:     rgba(255,255,255,0.06);
+  --border-hi:  rgba(99,179,237,0.2);
+  --accent:     #63b3ed;
+  --accent2:    #9f7aea;
+  --green:      #48bb78;
+  --text:       #e8edf8;
+  --text-secondary: rgba(232,237,248,0.55);
+  --muted:      #4a5568;
+  --nav-bg:     rgba(6,8,16,0.7);
+  --radius:     8px;
+  --radius-lg:  12px;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-body:  'Inter', system-ui, sans-serif;
+  --font-mono:  'DM Mono', 'Geist Mono', monospace;
+  --grid-color: rgba(99,179,237,0.025);
+}
+
+/* ─── Consumer Theme ─── */
+[data-theme="consumer"] {
+  --bg:         #f8f9fc;
+  --bg2:        #f0f2f7;
+  --bg3:        #e8ebf2;
+  --card:       #ffffff;
+  --card-hi:    #f8f9fc;
+  --border:     rgba(0,0,0,0.08);
+  --border-hi:  rgba(59,130,246,0.2);
+  --accent:     #3b82f6;
+  --accent2:    #7c3aed;
+  --green:      #10b981;
+  --text:       #111827;
+  --text-secondary: #6b7280;
+  --muted:      #9ca3af;
+  --nav-bg:     rgba(248,249,252,0.85);
+  --radius:     12px;
+  --radius-lg:  20px;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body:  'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono:  'DM Mono', 'Geist Mono', monospace;
+  --grid-color: transparent;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg:       var(--bg);
+  --color-bg2:      var(--bg2);
+  --color-bg3:      var(--bg3);
+  --color-card:     var(--card);
+  --color-card-hi:  var(--card-hi);
+  --color-border:   var(--border);
+  --color-border-hi: var(--border-hi);
+  --color-accent:   var(--accent);
+  --color-accent2:  var(--accent2);
+  --color-green:    var(--green);
+  --color-text:     var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-muted:    var(--muted);
+  --color-nav-bg:   var(--nav-bg);
+  --radius-theme:   var(--radius);
+  --radius-theme-lg: var(--radius-lg);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base ─── */
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+  margin: 0;
+}
+
+/* ─── Utility classes ─── */
+.font-display { font-family: var(--font-display); }
+.font-mono    { font-family: var(--font-mono); }
+
+/* Gradient text helper */
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtle grid background (aerospace only, transparent in consumer) */
+.bg-grid {
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* ─── Animations ─── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.6); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-fade-in-up-delay-1 {
+  animation: fade-in-up 0.6s ease-out 0.1s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-up-delay-2 {
+  animation: fade-in-up 0.6s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-up-delay-3 {
+  animation: fade-in-up 0.6s ease-out 0.3s forwards;
+  opacity: 0;
 }

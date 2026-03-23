@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style K — Warm Dark</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #100e0b;
+    --bg2:     #171410;
+    --bg3:     #1e1a15;
+    --border:  rgba(255,220,150,0.08);
+    --border2: rgba(255,220,150,0.16);
+    --amber:   #d4882a;
+    --amber2:  #f0b048;
+    --gold:    #e8c870;
+    --text:    #ede8de;
+    --muted:   #5c5042;
+    --muted2:  #8a7a66;
+    --display: 'Syne', sans-serif;
+    --sans:    'Inter', sans-serif;
+    --mono:    'DM Mono', monospace;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Warm vignette */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 120% 80% at 50% 0%, rgba(212,136,42,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 52px;
+    background: rgba(16,14,11,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  .logo em {
+    font-style: normal;
+    color: var(--amber);
+  }
+
+  nav ul { display: flex; gap: 36px; list-style: none; align-items: center; }
+
+  nav a {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--muted2);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--text); }
+
+  .nav-cta {
+    color: var(--amber) !important;
+    border: 1px solid rgba(212,136,42,0.3);
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: rgba(212,136,42,0.08) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 52px;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  /* Canvas for ember particles */
+  #ember-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  /* Subtle warm grid */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(212,136,42,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212,136,42,0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+    padding-top: 80px;
+  }
+
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0.85;
+  }
+
+  .hero-label::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--amber);
+    opacity: 0.5;
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(44px, 6.5vw, 96px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 32px;
+  }
+
+  h1 .dim { color: var(--muted2); font-weight: 400; }
+  h1 .warm { color: var(--amber2); }
+
+  .hero-sub {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--muted2);
+    max-width: 520px;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  .hero-sub strong { color: var(--text); font-weight: 400; }
+
+  .cta-row { display: flex; gap: 14px; align-items: center; }
+
+  .btn-amber {
+    background: var(--amber);
+    color: var(--bg);
+    border: none;
+    padding: 14px 32px;
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+
+  .btn-amber:hover { background: var(--amber2); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted2);
+    border: 1px solid var(--border2);
+    padding: 14px 32px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--text); border-color: rgba(255,220,150,0.3); }
+
+  /* Hero right: stats floated */
+  .hero-stats {
+    position: absolute;
+    right: 52px;
+    bottom: 52px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    text-align: right;
+  }
+
+  .hstat-num {
+    font-family: var(--display);
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .hstat-num em { font-style: normal; color: var(--amber); }
+
+  .hstat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ── CARDS ── */
+  .cards-section {
+    position: relative;
+    z-index: 1;
+    padding: 72px 52px;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, background 0.25s;
+  }
+
+  .card:hover {
+    border-color: var(--border2);
+    background: var(--bg3);
+  }
+
+  /* Warm corner glow on hover */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle at 0 0, rgba(212,136,42,0.12), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .card:hover::before { opacity: 1; }
+
+  .card-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--amber);
+    box-shadow: 0 0 8px rgba(212,136,42,0.5);
+  }
+
+  .card-name {
+    font-family: var(--display);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 14px;
+    line-height: 1.1;
+  }
+
+  .card-desc {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--muted2);
+    flex: 1;
+    margin-bottom: 28px;
+  }
+
+  .card-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-tag::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 1px;
+    background: var(--amber);
+    opacity: 0.5;
+  }
+
+  /* ── FUNDERS BAND ── */
+  .funders-band {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 36px 52px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .funders-intro {
+    flex: 1;
+    padding-right: 56px;
+    border-right: 1px solid var(--border);
+    margin-right: 56px;
+  }
+
+  .funders-intro-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .funders-intro-text {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .funders-intro-text em {
+    font-style: normal;
+    color: var(--amber);
+  }
+
+  .funder-pills {
+    display: flex;
+    gap: 12px;
+    flex: 2;
+  }
+
+  .funder-pill {
+    flex: 1;
+    padding: 20px 24px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  .funder-pill:hover {
+    border-color: var(--border2);
+    background: var(--bg3);
+  }
+
+  .pill-name {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .pill-full {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  /* ── ABOUT STRIP ── */
+  .about-strip {
+    position: relative;
+    z-index: 1;
+    padding: 56px 52px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 20px;
+    line-height: 1.05;
+  }
+
+  h2 em { font-style: normal; color: var(--amber); }
+
+  .about-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--muted2);
+    font-weight: 300;
+  }
+
+  .about-body strong { color: var(--text); font-weight: 400; }
+
+  .research-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .research-item {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .research-item:last-child { border-bottom: none; }
+
+  .ri-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    padding-top: 2px;
+    min-width: 24px;
+  }
+
+  .ri-title {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 3px;
+    font-weight: 400;
+  }
+
+  .ri-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--amber);
+    opacity: 0.65;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 28px 52px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .style-badge {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--amber);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 500;
+    z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div class="style-badge">STYLE K — WARM DARK</div>
+
+<nav>
+  <div class="logo">Rational<em>Cyphy</em></div>
+  <ul>
+    <li><a href="#">Research</a></li>
+    <li><a href="#">Technology</a></li>
+    <li><a href="#">Team</a></li>
+    <li><a href="#" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <canvas id="ember-canvas"></canvas>
+
+  <div class="hero-content">
+    <div class="hero-label">Physical Intelligence · Urbana-Champaign</div>
+    <h1>
+      <span class="dim">Build.</span><br>
+      <span class="dim">Verify.</span><br>
+      <span class="warm">Trust.</span>
+    </h1>
+    <p class="hero-sub">
+      We build <strong>powerful drones</strong>, their autonomy stacks, and the tools to <strong>design, verify, and reason</strong> about AI-enabled systems — with rigor.
+    </p>
+    <div class="cta-row">
+      <button class="btn-amber">Our Technology</button>
+      <button class="btn-ghost">Research &amp; Papers</button>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div>
+      <div class="hstat-num">$5<em>M+</em></div>
+      <div class="hstat-label">Total Funding</div>
+    </div>
+    <div>
+      <div class="hstat-num">3</div>
+      <div class="hstat-label">Core Systems</div>
+    </div>
+    <div>
+      <div class="hstat-num">5</div>
+      <div class="hstat-label">Team Members</div>
+    </div>
+  </div>
+</section>
+
+<div class="cards-section">
+  <div class="card">
+    <div class="card-num"><span>01 / RTAEval</span><div class="card-dot"></div></div>
+    <div class="card-name">Safety Assurance</div>
+    <p class="card-desc">Formal verification tooling for AI-enabled autonomy. Verify safety properties of runtime assurance architectures with mathematical rigor.</p>
+    <div class="card-tag">Formal Methods</div>
+  </div>
+  <div class="card">
+    <div class="card-num"><span>02 / Drone</span><div class="card-dot" style="background:var(--gold)"></div></div>
+    <div class="card-name">Mapping Drone</div>
+    <p class="card-desc">High-performance autonomous drone platform engineered for precision aerial mapping, survey, and environmental intelligence.</p>
+    <div class="card-tag">Hardware · Autonomy</div>
+  </div>
+  <div class="card">
+    <div class="card-num"><span>03 / Vision</span><div class="card-dot" style="background:var(--amber2)"></div></div>
+    <div class="card-name">Visual Tracking &amp; Mapping</div>
+    <p class="card-desc">Real-time 3D reconstruction using Gaussian Splatting. Onboard visual intelligence for tracking and mapping in complex environments.</p>
+    <div class="card-tag">3DGS · Perception</div>
+  </div>
+</div>
+
+<div class="funders-band">
+  <div class="funders-intro">
+    <div class="funders-intro-label">Backed by</div>
+    <div class="funders-intro-text"><em>$5M+</em> in grants<br>&amp; contracts</div>
+  </div>
+  <div class="funder-pills">
+    <div class="funder-pill">
+      <div class="pill-name">NASA</div>
+      <div class="pill-full">National Aeronautics &amp;<br>Space Administration</div>
+    </div>
+    <div class="funder-pill">
+      <div class="pill-name">AFRL</div>
+      <div class="pill-full">Air Force Research<br>Laboratory</div>
+    </div>
+    <div class="funder-pill">
+      <div class="pill-name">NSF</div>
+      <div class="pill-full">National Science<br>Foundation</div>
+    </div>
+  </div>
+</div>
+
+<section class="about-strip">
+  <div>
+    <h2>Physical <em>intelligence</em> for the real world</h2>
+    <p class="about-body">
+      Rational Cyphy is a physical intelligence company developing autonomous systems with <strong>provable safety guarantees</strong>. We span the full stack — from custom drone hardware and onboard perception to formal verification tools. Based at UIUC, funded by NASA, AFRL, and NSF.
+    </p>
+  </div>
+  <div>
+    <h2>Research</h2>
+    <ul class="research-list">
+      <li class="research-item">
+        <span class="ri-num">01</span>
+        <div>
+          <div class="ri-title">Runtime Assurance for AI-Enabled Autonomous Systems</div>
+          <div class="ri-meta">NASA · In review</div>
+        </div>
+      </li>
+      <li class="research-item">
+        <span class="ri-num">02</span>
+        <div>
+          <div class="ri-title">3D Gaussian Splatting for Aerial Mapping</div>
+          <div class="ri-meta">AFRL · 2024</div>
+        </div>
+      </li>
+      <li class="research-item">
+        <span class="ri-num">03</span>
+        <div>
+          <div class="ri-title">Formal Verification of Learning-Enabled Autonomy</div>
+          <div class="ri-meta">NSF · 2024</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">Rational<em style="color:var(--amber)">Cyphy</em></div>
+  <div class="footer-meta">Urbana-Champaign, IL &nbsp;·&nbsp; test@rationalcyphy.ai &nbsp;·&nbsp; © 2025</div>
+</footer>
+
+<script>
+// ── SLOW WARM EMBER / MOTE PARTICLES ─────────────────────────────────────────
+(function(){
+  const canvas = document.getElementById('ember-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+
+  function resize(){
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const N = 90;
+  const particles = [];
+
+  function rand(a, b){ return a + Math.random() * (b - a); }
+
+  for(let i = 0; i < N; i++){
+    particles.push({
+      x: rand(0, 1),
+      y: rand(0, 1),
+      size: rand(1, 3.5),
+      speed: rand(0.00008, 0.00022),   // fraction of H per ms
+      drift: rand(-0.00003, 0.00003),  // horizontal drift
+      alpha: rand(0.04, 0.22),
+      phase: rand(0, Math.PI * 2),
+      // warm amber/gold hues
+      hue: rand(28, 46),
+      sat: rand(70, 100),
+      lit: rand(55, 75),
+    });
+  }
+
+  let last = null;
+
+  function draw(ts){
+    if(!last) last = ts;
+    const dt = ts - last;
+    last = ts;
+
+    ctx.clearRect(0, 0, W, H);
+
+    for(const p of particles){
+      // move upward, slight horizontal wobble
+      p.y -= p.speed * dt;
+      p.x += p.drift * dt + Math.sin(ts * 0.0004 + p.phase) * 0.00003;
+      p.phase += 0.001;
+
+      // wrap
+      if(p.y < -0.02){ p.y = 1.02; p.x = rand(0.1, 0.9); }
+      if(p.x < 0) p.x += 1;
+      if(p.x > 1) p.x -= 1;
+
+      // fade near top (dissipate)
+      const fadeFactor = Math.min(1, p.y * 10);
+      const alpha = p.alpha * fadeFactor;
+
+      ctx.beginPath();
+      ctx.arc(p.x * W, p.y * H, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lit}%, ${alpha})`;
+      ctx.fill();
+
+      // Very soft glow for larger particles
+      if(p.size > 2.5){
+        ctx.beginPath();
+        ctx.arc(p.x * W, p.y * H, p.size * 3, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, ${p.sat}%, ${p.lit}%, ${alpha * 0.2})`;
+        ctx.fill();
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  requestAnimationFrame(draw);
+})();
+</script>
+
+</body>
+</html>
