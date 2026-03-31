@@ -10,8 +10,16 @@ export default function Hero() {
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-        src="/assets/emergencev2.mp4"
+        className="absolute pointer-events-none"
+        style={{
+          top: "50%",
+          right: "-5%",
+          transform: "translateY(-50%) scale(0.7)",
+          transformOrigin: "center right",
+          height: "100%",
+          objectFit: "contain",
+        }}
+        src="/assets/emergencev3_cropped.mp4"
       />
 
       {/* Left-side gradient overlay for text readability */}
@@ -120,7 +128,7 @@ export default function Hero() {
         <br />
         Visual Mapping System
         <br />
-        Rational Cyphy &copy; {new Date().getFullYear()}
+        Rational Cyphy &copy; 2026
       </div>
     </section>
   );
