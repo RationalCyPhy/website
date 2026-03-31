@@ -1,12 +1,18 @@
 "use client";
 
-import PointCloud from "./PointCloud";
 import { COMPANY } from "@/lib/data";
 
 export default function Hero() {
   return (
     <section className="relative h-screen flex items-center overflow-hidden bg-grid">
-      <PointCloud />
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+        src="/assets/emergencev2.mp4"
+      />
 
       {/* Left-side gradient overlay for text readability */}
       <div
@@ -52,12 +58,9 @@ export default function Hero() {
             color: "var(--text)",
           }}
         >
-          Autonomous
+          <strong className="font-bold text-gradient">Verifiable</strong>
           <br />
-          systems built
-          <br />
-          to be{" "}
-          <strong className="font-bold text-gradient">verified</strong>
+          Physical AI
         </h1>
 
         {/* Sub */}

@@ -98,12 +98,20 @@ export const TEAM = [
     credential: "B.S./M.S. Computer Science, UIUC",
     bio: "Full-stack engineer working across software and hardware integration. Builds perception systems and simulation environments. Works with competitive drone racing teams.",
   },
+  {
+    name: "Karteek Gandiboyina",
+    role: "Hardware Engineer",
+    initials: "KG",
+    image: "/assets/images/KG.png",
+    credential: "M.S. Autonomy & Robotics, UIUC · B.Tech Electrical Engineering, IIT Kharagpur",
+    bio: "Robotics and computer vision engineer with three years at Konica Minolta building industrial perception systems and collaborating with JAXA on space-station manipulation. Develops vision-based drone control and trajectory planning.",
+  },
 ];
 
 export const NAV_LINKS = [
-  { label: "Research", href: "/research" },
   { label: "Technology", href: "/technology" },
   { label: "Team", href: "/team" },
+  { label: "Research", href: "/research" },
   { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/contact" },
 ];

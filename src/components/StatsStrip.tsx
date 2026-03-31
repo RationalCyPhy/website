@@ -3,14 +3,12 @@ import { COMPANY } from "@/lib/data";
 const stats = [
   { value: COMPANY.funding, label: "Total Funding" },
   { value: "NASA \u00b7 AFRL \u00b7 NSF", label: "Government Backers", small: true },
-  { value: "2", label: "Core Technologies" },
-  { value: String(COMPANY.teamSize), label: "Team Members" },
 ];
 
 export default function StatsStrip() {
   return (
     <div
-      className="grid grid-cols-4"
+      className="grid grid-cols-2"
       style={{
         borderTop: "1px solid var(--border)",
         borderBottom: "1px solid var(--border)",
