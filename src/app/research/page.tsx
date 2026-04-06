@@ -50,11 +50,8 @@ export default function ResearchPage() {
 
       {/* Intro */}
       <div
-        className="grid gap-16 pb-12 mb-12"
-        style={{
-          gridTemplateColumns: "1fr 1fr",
-          borderBottom: "1px solid var(--border)",
-        }}
+        className="pb-12 mb-12"
+        style={{ borderBottom: "1px solid var(--border)" }}
       >
         <p
           style={{
@@ -62,16 +59,11 @@ export default function ResearchPage() {
             lineHeight: 1.7,
             color: "var(--text-secondary)",
             fontWeight: 300,
+            maxWidth: "640px",
           }}
         >
           Our research spans runtime assurance, 3D Gaussian Splatting, and formal
           verification of learning-enabled systems. Funded by NASA, AFRL, and NSF.
-        </p>
-        <p style={{ fontSize: "14px", lineHeight: 1.8, color: "var(--muted)" }}>
-          At Rational Cyphy, research and engineering are tightly coupled. Our
-          publications directly inform the systems we build — from the formal
-          methods underlying RTAEval to the perception pipelines in our mapping
-          platform.
         </p>
       </div>
 
@@ -112,6 +104,21 @@ export default function ResearchPage() {
               >
                 {pub.title}
               </h3>
+              {pub.authors && (
+                <p style={{ fontSize: "13px", color: "var(--text-secondary)", marginBottom: "4px" }}>
+                  {pub.authors}
+                </p>
+              )}
+              {pub.venue && (
+                <p style={{ fontSize: "12px", color: "var(--muted)", fontStyle: "italic", marginBottom: "6px" }}>
+                  {pub.venue}
+                </p>
+              )}
+              {pub.blurb && (
+                <p style={{ fontSize: "13px", color: "var(--muted)", marginBottom: "6px" }}>
+                  {pub.blurb}
+                </p>
+              )}
               <p
                 style={{
                   fontFamily: "var(--font-mono)",

@@ -3,7 +3,7 @@ export const COMPANY = {
   shortName: "RCP",
   tagline: "Physical Intelligence",
   location: "Urbana-Champaign, IL",
-  email: "test@rationalcyphy.ai",
+  email: "rationalcyphy@googlegroups.com",
   funding: "$5M+",
   teamSize: 4,
   founded: 2020,
@@ -49,18 +49,28 @@ export const TECHNOLOGIES = [
 
 export const RESEARCH = [
   {
-    title: "Runtime Assurance for AI-Enabled Autonomous Systems",
-    funder: "NASA",
-    status: "In review",
-  },
-  {
-    title: "3D Gaussian Splatting for Precision Aerial Mapping",
+    title: "RTAEval: A Framework for Evaluating Runtime Assurance Logic",
+    authors: "Miller, Zeitler,  Shen,  Mitra, and Viswanathan",
+    venue: "21st Intl. Symposium on Automated Technologies for Verification and Analysis (ATVA), pp 302–313, 2023",
+    blurb: "Introduces a software tool for evaluating whether runtime assurance monitors correctly enforce safety properties in autonomous systems in a variety of advanced scenarios.",
     funder: "AFRL",
-    status: "2024",
+    status: "2023",
+  },
+
+  {
+    title: "Abstract Rendering: Certified Rendering Under 3D Semantic Uncertainty",
+    authors: "Li, Ji, Zhong, Zhang, and Mitra",
+    venue: "NeurIPS (spotlight), 2025",
+    blurb: "Provides certified rendering guarantees for 3D scenes under semantic uncertainty, bridging formal methods and neural rendering.",
+    funder: "NSF",
+    status: "2025",
   },
   {
-    title: "Formal Verification of Learning-Enabled Autonomy Stacks",
-    funder: "NSF",
+    title: "Optimal Runtime Assurance via Reinforcement Learning",
+    authors: "Miller, Zeitler, Shen, Hobbs, Mitra, Schierman, and Viswanathan",
+    venue: "IEEE/ACM ICCPS International Conference on Cyberphysical Systems (ICCPS 2024), Hong Kong, 2024",
+    blurb: "Uses reinforcement learning to synthesize optimal runtime assurance strategies that maximize performance while guaranteeing safety.",
+    funder: "AFRL",
     status: "2024",
   },
 ];

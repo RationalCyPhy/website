@@ -82,10 +82,10 @@ export default function Hero() {
             marginBottom: "40px",
           }}
         >
-          {COMPANY.description}
+          We build powerful autonomy stacks and rigorous tooling to design, verify, and reason about AI-enabled systems — from hardware to formal assurance.
         </p>
 
-        {/* CTAs */}
+        {/* CTAs — commented out, kept as nav menu items
         <div className="flex gap-3 items-center animate-fade-in-up-delay-3">
           <a
             href="/technology"
@@ -111,25 +111,9 @@ export default function Hero() {
             Research &amp; Papers
           </a>
         </div>
+        */}
       </div>
 
-      {/* Bottom-right caption */}
-      <div
-        className="absolute bottom-9 right-12 z-10 text-right"
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "10px",
-          color: "rgba(99,179,237,0.35)",
-          letterSpacing: "0.08em",
-          lineHeight: 1.8,
-        }}
-      >
-        3D Gaussian Splat &middot; Point Cloud
-        <br />
-        Visual Mapping System
-        <br />
-        Rational Cyphy &copy; 2026
-      </div>
     </section>
   );
 }
