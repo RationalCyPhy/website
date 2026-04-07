@@ -163,43 +163,6 @@ export default function CareersPage() {
           </div>
         ))}
       </div>
-
-      {/* Open application */}
-      <div
-        className="mt-12 p-10 text-center"
-        style={{
-          background: "var(--card)",
-          border: "1px solid var(--border)",
-          borderRadius: "var(--radius-lg)",
-        }}
-      >
-        <h3
-          className="font-semibold mb-2"
-          style={{ fontSize: "18px", color: "var(--text)" }}
-        >
-          Don&apos;t see your role?
-        </h3>
-        <p
-          style={{
-            fontSize: "14px",
-            color: "var(--muted)",
-            marginBottom: "16px",
-          }}
-        >
-          We&apos;re always looking for exceptional people. Send us your resume.
-        </p>
-        <a
-          href={`mailto:${COMPANY.email}?subject=Open Application`}
-          className="no-underline px-6 py-3 text-sm font-semibold"
-          style={{
-            background: "var(--accent)",
-            color: "var(--bg)",
-            borderRadius: "var(--radius)",
-          }}
-        >
-          Open Application
-        </a>
-      </div>
     </div>
   );
 }

@@ -19,7 +19,7 @@ export default function Hero() {
           height: "100%",
           objectFit: "contain",
         }}
-        src="/assets/emergencev3_cropped.mp4"
+        src="/website/assets/emergencev3_cropped.mp4"
       />
 
       {/* Left-side gradient overlay for text readability */}
