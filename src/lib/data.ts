@@ -27,23 +27,24 @@ export const TECHNOLOGIES = [
     tags: ["Formal Methods", "AI Safety", "Verification"],
     color: "accent" as const,
   },
+];
+
+export const FEATURED_TECHS = [
   {
-    id: "02",
+    name: "MorphOS",
+    category: "Development & Test Framework",
+    description:
+      "MorphOS is our framework for development and testing of aerial autonomous platforms — combining photoreal simulation, multi-agent scenarios, and a full-stack autonomy pipeline that scales from single drones to coordinated swarms.",
+    tags: ["Multiagent", "Photoreal", "Full-stack", "Scalable"],
+    video: "/website/assets/videos/morphos.mp4",
+  },
+  {
     name: "Mapping Drone",
     category: "Hardware Platform",
     description:
       "High-performance autonomous drone platform engineered for precision aerial mapping, environmental survey, and data acquisition.",
     tags: ["Hardware", "Autonomy", "Sensing"],
-    color: "green" as const,
-  },
-  {
-    id: "03",
-    name: "Visual Tracking & Mapping",
-    category: "Perception System",
-    description:
-      "Real-time 3D reconstruction using Gaussian Splatting. Onboard visual intelligence for tracking and mapping in complex environments.",
-    tags: ["3DGS", "Perception", "SLAM"],
-    color: "accent2" as const,
+    video: null,
   },
 ];
 

@@ -161,7 +161,7 @@ export default function ResearchPage() {
         }}
       >
         <p style={{ fontSize: "14px", color: "var(--muted)", marginBottom: "16px" }}>
-          Interested in collaborating on research?
+          Try our tools
         </p>
         <a
           href={`mailto:${COMPANY.email}`}

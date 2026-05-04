@@ -1,4 +1,4 @@
-import { TECHNOLOGIES } from "@/lib/data";
+import { TECHNOLOGIES, FEATURED_TECHS } from "@/lib/data";
 
 export const metadata = {
   title: "Technology — Rational Cyphy",
@@ -46,6 +46,112 @@ export default function TechnologyPage() {
         >
           § 02
         </span>
+      </div>
+
+      {/* Featured: MorphOS + Mapping Drone (parallel, 80% width) */}
+      <div
+        className="grid grid-cols-2 gap-6 mb-12 mx-auto"
+        style={{ maxWidth: "80%" }}
+      >
+        {FEATURED_TECHS.map((tech) => (
+          <div
+            key={tech.name}
+            className="overflow-hidden flex flex-col"
+            style={{
+              background: "var(--card)",
+              border: "1px solid var(--border)",
+              borderRadius: "var(--radius-lg)",
+            }}
+          >
+            {tech.video ? (
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full block"
+                style={{ aspectRatio: "16 / 9", objectFit: "cover" }}
+                src={tech.video}
+              />
+            ) : (
+              <div
+                className="w-full flex items-center justify-center"
+                style={{
+                  aspectRatio: "16 / 9",
+                  background:
+                    "linear-gradient(135deg, rgba(99,179,237,0.08), rgba(159,122,234,0.08))",
+                  borderBottom: "1px solid var(--border)",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "11px",
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "var(--muted)",
+                  }}
+                >
+                  Imagery coming soon
+                </span>
+              </div>
+            )}
+            <div className="p-8 flex flex-col gap-4 flex-1">
+              <div>
+                <h2
+                  className="font-semibold"
+                  style={{
+                    fontSize: "22px",
+                    letterSpacing: "-0.02em",
+                    lineHeight: 1.2,
+                    color: "var(--text)",
+                    marginBottom: "6px",
+                  }}
+                >
+                  {tech.name}
+                </h2>
+                <p
+                  className="flex items-center gap-2"
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "10px",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "var(--accent)",
+                  }}
+                >
+                  <span
+                    className="w-1.5 h-1.5 rounded-full inline-block"
+                    style={{ background: "var(--accent)" }}
+                  />
+                  {tech.category}
+                </p>
+              </div>
+              <p style={{ fontSize: "14px", lineHeight: 1.7, color: "var(--muted)" }}>
+                {tech.description}
+              </p>
+              <div className="flex flex-wrap gap-2 mt-auto">
+                {tech.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-2.5 py-1"
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "10px",
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      color: "var(--muted)",
+                      border: "1px solid var(--border)",
+                      borderRadius: "100px",
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Technology list */}
