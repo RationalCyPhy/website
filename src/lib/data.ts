@@ -36,7 +36,7 @@ export const FEATURED_TECHS = [
     description:
       "MorphOS is our framework for development and testing of aerial autonomous platforms — combining photoreal simulation, multi-agent scenarios, and a full-stack autonomy pipeline that scales from single drones to coordinated swarms.",
     tags: ["Multiagent", "Photoreal", "Full-stack", "Scalable"],
-    video: "/website/assets/videos/morphos.mp4",
+    video: "/website/assets/videos/MorphOS1v2.mp4",
   },
   {
     name: "Mapping Drone",
