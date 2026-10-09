@@ -37,14 +37,16 @@ export const FEATURED_TECHS = [
       "MorphOS is our framework for development and testing of aerial autonomous platforms — combining photoreal simulation, multi-agent scenarios, and a full-stack autonomy pipeline that scales from single drones to coordinated swarms.",
     tags: ["Multiagent", "Photoreal", "Full-stack", "Scalable"],
     video: "/website/assets/videos/MorphOS1v2.mp4",
+    poster: null,
   },
   {
     name: "Mapping Drone",
     category: "Hardware Platform",
     description:
-      "High-performance autonomous drone platform engineered for precision aerial mapping, environmental survey, and data acquisition.",
+      "High-performance autonomous drone platform engineered for precision aerial mapping, environmental survey, and data acquisition. Prototype 1 carries a stereo camera; shown here in flight tests alongside its CAD model.",
     tags: ["Hardware", "Autonomy", "Sensing"],
-    video: null,
+    video: "/website/assets/videos/mapping-drone.mp4",
+    poster: "/website/assets/videos/mapping-drone-poster.jpg",
   },
 ];
 

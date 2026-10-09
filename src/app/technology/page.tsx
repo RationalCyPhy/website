@@ -72,6 +72,7 @@ export default function TechnologyPage() {
                 className="w-full block"
                 style={{ aspectRatio: "16 / 9", objectFit: "cover" }}
                 src={tech.video}
+                poster={tech.poster ?? undefined}
               />
             ) : (
               <div
