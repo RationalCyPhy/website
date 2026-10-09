@@ -48,7 +48,7 @@ export default function TechnologyPage() {
         </span>
       </div>
 
-      {/* Featured: MorphOS + Mapping Drone (parallel, 80% width) */}
+      {/* Featured: MorphOS + Proto A (parallel, 80% width) */}
       <div
         className="grid grid-cols-2 gap-6 mb-12 mx-auto"
         style={{ maxWidth: "80%" }}

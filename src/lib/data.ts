@@ -40,10 +40,10 @@ export const FEATURED_TECHS = [
     poster: null,
   },
   {
-    name: "Mapping Drone",
+    name: "Proto A",
     category: "Hardware Platform",
     description:
-      "High-performance autonomous drone platform engineered for precision aerial mapping, environmental survey, and data acquisition. Prototype 1 carries a stereo camera; shown here in flight tests alongside its CAD model.",
+      "High-performance autonomous drone platform engineered for precision aerial mapping, environmental survey, and data acquisition. Proto A carries a stereo camera; shown here in flight tests alongside its CAD model.",
     tags: ["Hardware", "Autonomy", "Sensing"],
     video: "/website/assets/videos/mapping-drone.mp4",
     poster: "/website/assets/videos/mapping-drone-poster.jpg",
